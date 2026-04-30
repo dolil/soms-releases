@@ -203,60 +203,6 @@
     overflow-y: auto;
   }
 
-  /* Previous releases */
-  .history {
-    max-width: 640px;
-    margin: 26px auto 0;
-  }
-  .history h2 {
-    font-size: 14px;
-    font-weight: 700;
-    margin: 0 0 10px;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-  .release-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 14px;
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    margin-bottom: 6px;
-    transition: border-color 0.15s, box-shadow 0.15s;
-  }
-  .release-row:hover {
-    border-color: var(--green);
-    box-shadow: var(--shadow-sm);
-  }
-  .release-row .info .ver {
-    font-weight: 600;
-    font-size: 13.5px;
-  }
-  .release-row .info .sub {
-    color: var(--muted);
-    font-size: 12px;
-  }
-  .btn-secondary {
-    background: #fff;
-    color: var(--green-dark);
-    border: 1px solid var(--green-soft);
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 12.5px;
-    font-weight: 600;
-    text-decoration: none;
-    white-space: nowrap;
-    transition: background 0.15s, border-color 0.15s;
-  }
-  .btn-secondary:hover {
-    background: var(--green-tint);
-    border-color: var(--green);
-  }
-
   /* States */
   .state {
     text-align: center;
@@ -290,7 +236,6 @@
     .hero p { font-size: 13.5px; margin-bottom: 14px; }
     .download-card { padding: 16px; }
     .download-card .top { flex-direction: column; gap: 6px; }
-    .release-row { flex-direction: row; align-items: center; }
   }
 </style>
 </head>
@@ -392,43 +337,19 @@ function renderLatest(release) {
   `;
 }
 
-function renderHistory(releases) {
-  const rows = releases
-    .map(r => {
-      const setup = pickSetupAsset(r);
-      if (!setup) return null;
-      return `
-        <div class="release-row">
-          <div class="info">
-            <div class="ver">${escapeHtml(r.name || r.tag_name)}</div>
-            <div class="sub">${formatDate(r.published_at)} &middot; ${formatSize(setup.size)}</div>
-          </div>
-          <a class="btn-secondary" href="${escapeHtml(setup.browser_download_url)}">Download</a>
-        </div>
-      `;
-    })
-    .filter(Boolean)
-    .join("");
-  if (!rows) return "";
-  return `<div class="history"><h2>Previous versions</h2>${rows}</div>`;
-}
-
 async function load() {
   const content = document.getElementById("content");
   try {
-    const res = await fetch(API, { headers: { Accept: "application/vnd.github+json" } });
-    if (!res.ok) throw new Error(`GitHub API returned ${res.status}`);
-    const releases = (await res.json()).filter(r => !r.draft && !r.prerelease);
-
-    if (!releases.length) {
+    const res = await fetch(`${API}/latest`, { headers: { Accept: "application/vnd.github+json" } });
+    if (res.status === 404) {
       content.innerHTML = `<div class="state">No releases published yet. Check back soon.</div>`;
       return;
     }
-
-    const [latest, ...rest] = releases;
-    content.innerHTML = renderLatest(latest) + renderHistory(rest);
+    if (!res.ok) throw new Error(`GitHub API returned ${res.status}`);
+    const latest = await res.json();
+    content.innerHTML = renderLatest(latest);
   } catch (err) {
-    content.innerHTML = `<div class="state error">Failed to load releases: ${escapeHtml(err.message)}</div>`;
+    content.innerHTML = `<div class="state error">Failed to load release: ${escapeHtml(err.message)}</div>`;
   }
 }
 
