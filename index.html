@@ -269,7 +269,26 @@
 
 <script>
 const REPO = "dolil/soms-releases";
-const API = `https://api.github.com/repos/${REPO}/releases`;
+
+// Where the release metadata comes from, in order of preference.
+//
+// `latest.json` is written next to this page by CI on every release
+// (.github/workflows/update-latest.yml). It is served from this origin, so it is free and
+// cannot be throttled. The GitHub API is the fallback only: anonymous callers get 60
+// requests per hour PER IP across all of api.github.com, and every request after that —
+// including this page's — is answered 403 for the rest of the hour. A whole office behind
+// one NAT address, or one developer with a script running, exhausts that quota easily, and
+// then the download page breaks for everyone sharing the address.
+const FEED = "./latest.json";
+const API = `https://api.github.com/repos/${REPO}/releases/latest`;
+const RELEASES_PAGE = `https://github.com/${REPO}/releases/latest`;
+
+const DOWNLOAD_ICON = `
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+    <polyline points="7 10 12 15 17 10"/>
+    <line x1="12" y1="15" x2="12" y2="3"/>
+  </svg>`;
 
 function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, c => ({
@@ -304,11 +323,7 @@ function renderLatest(release) {
   const downloadHtml = setup
     ? `
       <a class="btn-download" href="${escapeHtml(setup.browser_download_url)}">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-          <polyline points="7 10 12 15 17 10"/>
-          <line x1="12" y1="15" x2="12" y2="3"/>
-        </svg>
+        ${DOWNLOAD_ICON}
         Download for Windows
       </a>
       <div class="file-meta">
@@ -337,19 +352,56 @@ function renderLatest(release) {
   `;
 }
 
+// Last resort: no version, no file size, but still a working download. The
+// /releases/latest URL is plain GitHub web — it needs no API call and no quota.
+function renderFallback() {
+  return `
+    <div class="download-card">
+      <div class="top">
+        <div class="version-block">
+          <p class="version">Latest release</p>
+          <p class="date">Version details are unavailable right now</p>
+        </div>
+        <span class="platform-pill">Windows &middot; .exe</span>
+      </div>
+      <a class="btn-download" href="${RELEASES_PAGE}">
+        ${DOWNLOAD_ICON}
+        Download for Windows
+      </a>
+      <div class="file-meta"><span>Opens the release page on GitHub</span></div>
+    </div>`;
+}
+
+async function fetchLatest() {
+  try {
+    // Cache-busted so a fresh release shows up without waiting out the CDN's TTL.
+    const res = await fetch(`${FEED}?t=${Date.now()}`, { cache: "no-store" });
+    if (res.ok) {
+      const data = await res.json();
+      if (data && Array.isArray(data.assets)) return data;
+    }
+  } catch (err) {
+    console.warn("Static release feed unavailable, falling back to the API:", err);
+  }
+
+  const res = await fetch(API, { headers: { Accept: "application/vnd.github+json" } });
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error(`GitHub API returned ${res.status}`);
+  return res.json();
+}
+
 async function load() {
   const content = document.getElementById("content");
   try {
-    const res = await fetch(`${API}/latest`, { headers: { Accept: "application/vnd.github+json" } });
-    if (res.status === 404) {
-      content.innerHTML = `<div class="state">No releases published yet. Check back soon.</div>`;
-      return;
-    }
-    if (!res.ok) throw new Error(`GitHub API returned ${res.status}`);
-    const latest = await res.json();
-    content.innerHTML = renderLatest(latest);
+    const latest = await fetchLatest();
+    content.innerHTML = latest
+      ? renderLatest(latest)
+      : `<div class="state">No releases published yet. Check back soon.</div>`;
   } catch (err) {
-    content.innerHTML = `<div class="state error">Failed to load release: ${escapeHtml(err.message)}</div>`;
+    // The visitor came here to download something; give them the link rather than an
+    // HTTP status code they can do nothing with.
+    console.warn("Could not load release metadata:", err);
+    content.innerHTML = renderFallback();
   }
 }
 
