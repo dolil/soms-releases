@@ -27,7 +27,12 @@ jobs:
       contents: write
 
     steps:
+      # THE BRANCH, NOT THE TAG. A `release` event checks out the tag it fired for, which is a
+      # detached HEAD — the job then builds latest.json correctly, commits it, and dies on `git push`
+      # with "You are not currently on a branch". Pages serves `main`, so that is what this edits.
       - uses: actions/checkout@v4
+        with:
+          ref: main
 
       - name: Describe the newest published release
         env:
