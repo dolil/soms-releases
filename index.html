@@ -262,6 +262,10 @@
     <div class="state">Loading latest release&hellip;</div>
   </div>
 
+  <!-- The Android app. Filled by loadMobile() below, independently of the desktop card: its own
+       feed, its own failure path, hidden until a first APK is published. -->
+  <div id="mobile" hidden></div>
+
   <footer>
     Released by <a href="https://github.com/dolil" target="_blank" rel="noopener">@dolil</a> &middot; Auto-published from CI
   </footer>
@@ -406,6 +410,59 @@ async function load() {
 }
 
 load();
+
+// ── SOMS Android app ──────────────────────────────────────────────────────────────────────────
+// Published to a SEPARATE repo, dolil/soms-mobile-releases, so a phone build can never be taken
+// for a desktop update by electron-updater (which reads this repo's latest release). Its
+// release-mobile workflow writes latest.json there; raw.githubusercontent.com serves it with open
+// CORS and no API quota. Nothing above depends on this: a missing or broken feed only leaves the
+// Android card hidden.
+const MOBILE_FEED = "https://raw.githubusercontent.com/dolil/soms-mobile-releases/main/latest.json";
+
+function renderMobile(m) {
+  const apk = m.apk || {};
+  return `
+    <div class="download-card" style="margin-top:20px">
+      <div class="top">
+        <div class="version-block">
+          <p class="version">SOMS মোবাইল অ্যাপ ${escapeHtml(m.version || "")}</p>
+          <p class="date">Released ${formatDate(m.published_at)} &middot; Android ${escapeHtml(m.min_android || "7.0")}+</p>
+        </div>
+        <span class="platform-pill">Android &middot; .apk</span>
+      </div>
+      <a class="btn-download" href="${escapeHtml(apk.url)}">
+        ${DOWNLOAD_ICON}
+        Download for Android
+      </a>
+      <div class="file-meta">
+        <span>${escapeHtml(apk.name || "")}</span>
+        <span class="sep">&bull;</span>
+        <span>${apk.size ? formatSize(apk.size) : ""}</span>
+      </div>
+      <div class="file-meta" style="font-size:12px">
+        <span>ফোনে ডাউনলোড করে খুলুন — প্রথমবার “অজানা উৎস থেকে ইনস্টল” এর অনুমতি দিন।
+        মাসিক প্রতিবেদনের স্বাক্ষরিত কপি স্ক্যান করে ডেস্কটপে পাঠাতে।</span>
+      </div>
+      ${apk.sha256 ? `<div class="file-meta" style="font-size:11px;word-break:break-all"><span>SHA-256: ${escapeHtml(apk.sha256)}</span></div>` : ""}
+    </div>`;
+}
+
+async function loadMobile() {
+  const box = document.getElementById("mobile");
+  try {
+    const res = await fetch(`${MOBILE_FEED}?t=${Date.now()}`, { cache: "no-store" });
+    if (!res.ok) return; // no Android release yet — the card stays hidden
+    const m = await res.json();
+    // Only ever link to an APK published in the SOMS mobile releases repo.
+    if (!m || !m.apk || !/^https:\/\/github\.com\/dolil\/soms-mobile-releases\//.test(m.apk.url || "")) return;
+    box.innerHTML = renderMobile(m);
+    box.hidden = false;
+  } catch (err) {
+    console.warn("Android release feed unavailable:", err);
+  }
+}
+
+loadMobile();
 </script>
 
 </body>
