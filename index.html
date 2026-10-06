@@ -236,7 +236,38 @@
     .hero p { font-size: 13.5px; margin-bottom: 14px; }
     .download-card { padding: 16px; }
     .download-card .top { flex-direction: column; gap: 6px; }
+    .companion { flex-direction: column; align-items: stretch; }
   }
+
+  /* The Android companion app — deliberately SECONDARY to the desktop download: a quiet card
+     below it, an outline button, and "ঐচ্ছিক" up front. SOMS works fully without it. */
+  /* Same column as the desktop card above it (max-width 520px, centred). */
+  .companion-wrap { max-width: 520px; margin: 28px auto 0; text-align: left; }
+  .companion-wrap h3 {
+    font-size: 13px; font-weight: 600; color: var(--muted);
+    text-transform: none; margin: 0 0 8px; letter-spacing: 0.01em;
+  }
+  .companion {
+    display: flex; align-items: center; gap: 16px;
+    border: 1px dashed var(--border); border-radius: 12px;
+    padding: 14px 16px; background: #fff;
+  }
+  .companion .info { flex: 1; min-width: 0; }
+  .companion .name { font-weight: 600; font-size: 14.5px; margin: 0; }
+  .companion .opt {
+    display: inline-block; margin-left: 6px; padding: 1px 8px; border-radius: 999px;
+    font-size: 11px; font-weight: 600; color: var(--muted); background: #f1f5f4; vertical-align: 1px;
+  }
+  .companion .what { font-size: 13px; color: var(--muted); margin: 4px 0 0; line-height: 1.55; }
+  .companion .meta { font-size: 11.5px; color: var(--muted); margin: 6px 0 0; opacity: 0.85; }
+  .companion .sha { display: block; font-family: ui-monospace, Consolas, monospace; font-size: 10.5px; word-break: break-all; margin-top: 2px; }
+  .btn-outline {
+    flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    padding: 8px 14px; border-radius: 8px; border: 1px solid var(--green);
+    color: var(--green-dark); background: #fff; font-size: 13.5px; font-weight: 600;
+    text-decoration: none; white-space: nowrap;
+  }
+  .btn-outline:hover { background: var(--green-tint); }
 </style>
 </head>
 <body>
@@ -419,31 +450,30 @@ load();
 // Android card hidden.
 const MOBILE_FEED = "https://raw.githubusercontent.com/dolil/soms-mobile-releases/main/latest.json";
 
+// A companion, not a second product: SOMS runs entirely on the desktop. The card says what the app
+// is FOR (sending a signed paper — the monthly return's স্বাক্ষরিত কপি — from a phone) and that it is
+// optional, so nobody installs it thinking the system needs it.
 function renderMobile(m) {
   const apk = m.apk || {};
   return `
-    <div class="download-card" style="margin-top:20px">
-      <div class="top">
-        <div class="version-block">
-          <p class="version">SOMS মোবাইল অ্যাপ ${escapeHtml(m.version || "")}</p>
-          <p class="date">Released ${formatDate(m.published_at)} &middot; Android ${escapeHtml(m.min_android || "7.0")}+</p>
+    <div class="companion-wrap">
+      <h3>সহায়ক মোবাইল অ্যাপ</h3>
+      <div class="companion">
+        <div class="info">
+          <p class="name">SOMS মোবাইল অ্যাপ <span class="opt">ঐচ্ছিক</span></p>
+          <p class="what">
+            মাসিক প্রতিবেদনের স্বাক্ষরিত কপির মতো কাগজপত্র ফোনে স্ক্যান করে বা পিডিএফ হিসেবে ডেস্কটপে পাঠানোর জন্য।
+            SOMS ব্যবহারে এটি আবশ্যক নয় — ডেস্কটপ থেকেই পিডিএফ সংযুক্ত করা যায়।
+          </p>
+          <p class="meta">
+            Android ${escapeHtml(m.min_android || "7.0")}+ &middot; সংস্করণ ${escapeHtml(m.version || "")}
+            &middot; ${apk.size ? formatSize(apk.size) : ""}
+            &middot; প্রথমবার ইনস্টলে “অজানা উৎস” এর অনুমতি দিতে হবে
+            ${apk.sha256 ? `<span class="sha">SHA-256: ${escapeHtml(apk.sha256)}</span>` : ""}
+          </p>
         </div>
-        <span class="platform-pill">Android &middot; .apk</span>
+        <a class="btn-outline" href="${escapeHtml(apk.url)}">${DOWNLOAD_ICON} Android APK</a>
       </div>
-      <a class="btn-download" href="${escapeHtml(apk.url)}">
-        ${DOWNLOAD_ICON}
-        Download for Android
-      </a>
-      <div class="file-meta">
-        <span>${escapeHtml(apk.name || "")}</span>
-        <span class="sep">&bull;</span>
-        <span>${apk.size ? formatSize(apk.size) : ""}</span>
-      </div>
-      <div class="file-meta" style="font-size:12px">
-        <span>ফোনে ডাউনলোড করে খুলুন — প্রথমবার “অজানা উৎস থেকে ইনস্টল” এর অনুমতি দিন।
-        মাসিক প্রতিবেদনের স্বাক্ষরিত কপি স্ক্যান করে ডেস্কটপে পাঠাতে।</span>
-      </div>
-      ${apk.sha256 ? `<div class="file-meta" style="font-size:11px;word-break:break-all"><span>SHA-256: ${escapeHtml(apk.sha256)}</span></div>` : ""}
     </div>`;
 }
 
