@@ -57,8 +57,10 @@ jobs:
             echo "latest.json is already current."
             exit 0
           fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Committed as the repo owner, not github-actions[bot], so the repository's contributors
+          # stay the owner alone. The push itself still uses this job's token.
+          git config user.name "dolil"
+          git config user.email "dev.maksu@gmail.com"
           git add latest.json
           git commit -m "Point the download page at $(jq -r .tag_name latest.json)"
           git push
