@@ -1,499 +1,574 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn" translate="no">
 <head>
 <meta charset="utf-8" />
+<meta name="google" content="notranslate" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Download SOMS Desktop</title>
-<meta name="description" content="Download the latest version of SOMS Desktop for Windows." />
+<title>স্মার্ট অফিস ম্যানেজমেন্ট সিস্টেম (SOMS) — ডাউনলোড</title>
+<meta name="description" content="স্মার্ট অফিস ম্যানেজমেন্ট সিস্টেম (SOMS) — বহুস্তরভিত্তিক অফিসের পত্র, নথি, রেজিস্টার, প্রতিবেদন ও মাসিক বিবরণী ব্যবস্থাপনার ডেস্কটপ সফটওয়্যার। পরীক্ষামূলক সংস্করণ।" />
+<meta name="theme-color" content="#0b5d3b" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230b5d3b'/%3E%3Ctext x='32' y='42' font-family='Arial,sans-serif' font-size='26' font-weight='700' fill='white' text-anchor='middle'%3ESO%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@600;700&display=swap" />
 <style>
   :root {
-    --bg: #ffffff;
-    --surface: #ffffff;
-    --surface-alt: #f6faf7;
-    --border: #e3e8ea;
-    --text: #0f1f17;
-    --muted: #5b6b62;
-    --green: #16a34a;
-    --green-dark: #15803d;
-    --green-soft: #dcfce7;
-    --green-tint: #f0fdf4;
-    --shadow-sm: 0 1px 2px rgba(15, 31, 23, 0.04);
-    --shadow-md: 0 4px 16px rgba(22, 163, 74, 0.08);
-    --shadow-lg: 0 12px 40px rgba(22, 163, 74, 0.12);
+    --bg: #f5f6f4;
+    --paper: #ffffff;
+    --line: #d9ded9;
+    --line-strong: #c3cbc5;
+    --text: #1d2420;
+    --soft: #3e4842;
+    --muted: #66706a;
+    --green: #0b5d3b;
+    --green-mid: #13784e;
+    --green-tint: #edf5f0;
+    --gold: #8a6d1d;
+    --notice-bg: #fff8e6;
+    --notice-line: #ecd9a6;
+    --radius: 6px;
   }
   * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 76px; }
   html, body { margin: 0; padding: 0; }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", Roboto, Helvetica, Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.55;
-    -webkit-font-smoothing: antialiased;
+    font-family: "Noto Sans Bengali", "Nirmala UI", "Segoe UI", Roboto, Arial, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.65; -webkit-font-smoothing: antialiased;
   }
+  h1, h2 { font-family: "Noto Serif Bengali", "Noto Sans Bengali", serif; }
+  a { color: var(--green); }
+  svg { flex-shrink: 0; }
+  .wrap { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
 
-  /* Top bar */
-  .nav {
-    border-bottom: 1px solid var(--border);
-    background: #fff;
-  }
-  .nav-inner {
-    max-width: 1040px;
-    margin: 0 auto;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .brand {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 700;
-    font-size: 15px;
-    color: var(--text);
-    text-decoration: none;
-  }
-  .brand-mark {
-    width: 24px; height: 24px;
-    background: var(--green);
-    border-radius: 6px;
-    display: grid; place-items: center;
-    color: #fff; font-weight: 800; font-size: 12px;
-  }
-  .nav a.gh {
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: 500;
-  }
-  .nav a.gh:hover { color: var(--green-dark); }
+  /* Trial-version notice */
+  .notice { background: var(--notice-bg); border-bottom: 1px solid var(--notice-line); color: #5c4710; font-size: 13px; }
+  .notice .wrap { display: flex; align-items: center; gap: 10px; padding-top: 7px; padding-bottom: 7px; }
+  .notice b { white-space: nowrap; background: #f3e2b3; border: 1px solid var(--notice-line); border-radius: 4px; padding: 0 8px; font-weight: 700; }
 
-  /* Hero */
-  .container {
-    max-width: 880px;
-    margin: 0 auto;
-    padding: 24px 20px 32px;
+  /* Header */
+  header.top { background: var(--paper); border-bottom: 3px solid var(--green); position: sticky; top: 0; z-index: 10; }
+  header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 66px; }
+  .ident { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text); min-width: 0; }
+  .mark {
+    width: 48px; height: 42px; border-radius: 6px; background: var(--green); color: #fff;
+    display: grid; place-items: center; font: 700 13px/1 "Segoe UI", Arial, sans-serif; letter-spacing: 0.6px;
   }
-  .hero {
-    text-align: center;
-    padding: 0 8px 4px;
-  }
-  .hero .eyebrow {
-    display: inline-block;
-    background: var(--green-soft);
-    color: var(--green-dark);
-    font-size: 12px;
-    font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 999px;
-    margin-bottom: 10px;
-    letter-spacing: 0.2px;
-  }
-  .hero h1 {
-    margin: 0 0 6px;
-    font-size: 28px;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    line-height: 1.15;
-  }
-  .hero p {
-    margin: 0 auto 18px;
-    max-width: 480px;
-    color: var(--muted);
-    font-size: 14px;
-  }
+  .ident-text { display: flex; flex-direction: column; line-height: 1.25; min-width: 0; }
+  .ident-text b { font-size: 16.5px; }
+  .ident-text span { font-size: 12px; color: var(--muted); letter-spacing: 0.2px; }
+  nav.menu { display: flex; align-items: center; gap: 4px; }
+  nav.menu a { color: var(--soft); text-decoration: none; font-size: 14px; font-weight: 500; padding: 6px 10px; border-radius: 4px; }
+  nav.menu a:hover { background: var(--green-tint); color: var(--green); }
+  nav.menu a.dl { background: var(--green); color: #fff; font-weight: 600; margin-left: 6px; }
+  nav.menu a.dl:hover { background: var(--green-mid); }
 
-  /* Download card */
-  .download-card {
-    max-width: 520px;
-    margin: 0 auto;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 18px 20px;
-    box-shadow: var(--shadow-md);
-    text-align: left;
+  /* Title block */
+  .title-block { background: var(--paper); border-bottom: 1px solid var(--line); padding: 34px 0 32px; }
+  .title-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 36px; align-items: start; }
+  .kicker { margin: 0 0 8px; font-size: 13px; font-weight: 600; color: var(--green); letter-spacing: 0.3px; }
+  .title-block h1 { margin: 0 0 6px; font-size: 34px; line-height: 1.35; color: var(--text); }
+  .title-block .en { margin: 0 0 14px; font-size: 15px; color: var(--muted); }
+  .title-block .desc { margin: 0 0 22px; font-size: 15.5px; color: var(--soft); max-width: 600px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px; border-radius: var(--radius);
+    font-size: 15px; font-weight: 600; text-decoration: none; border: 1px solid var(--green);
+    background: var(--green); color: #fff; transition: background 0.15s;
   }
-  .download-card .top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 12px;
-    margin-bottom: 14px;
-  }
-  .version-block .version {
-    font-size: 17px;
-    font-weight: 700;
-    margin: 0 0 1px;
-  }
-  .version-block .date {
-    color: var(--muted);
-    font-size: 12.5px;
-  }
-  .platform-pill {
-    background: var(--green-tint);
-    color: var(--green-dark);
-    border: 1px solid var(--green-soft);
-    border-radius: 6px;
-    padding: 4px 8px;
-    font-size: 11.5px;
-    font-weight: 600;
-    white-space: nowrap;
-  }
+  .btn:hover { background: var(--green-mid); }
+  .btn.secondary { background: #fff; color: var(--green); }
+  .btn.secondary:hover { background: var(--green-tint); }
+  .btn.block { display: flex; justify-content: center; width: 100%; }
 
-  .btn-download {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    width: 100%;
-    background: var(--green);
-    color: #fff;
-    border: none;
-    padding: 12px 18px;
-    border-radius: 8px;
-    font-size: 14.5px;
-    font-weight: 600;
-    text-decoration: none;
-    cursor: pointer;
-    transition: background 0.15s, transform 0.05s, box-shadow 0.15s;
-    box-shadow: var(--shadow-sm);
-  }
-  .btn-download:hover {
-    background: var(--green-dark);
-    box-shadow: var(--shadow-md);
-  }
-  .btn-download:active { transform: translateY(1px); }
-  .btn-download svg { flex-shrink: 0; }
+  /* Info tables */
+  .panel { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); }
+  .panel-head { padding: 10px 16px; border-bottom: 1px solid var(--line); background: #f8faf8; font-weight: 700; font-size: 14px; color: var(--green); display: flex; align-items: center; gap: 8px; border-radius: var(--radius) var(--radius) 0 0; }
+  table.facts { width: 100%; border-collapse: collapse; font-size: 14px; }
+  table.facts th, table.facts td { text-align: left; padding: 8px 16px; border-bottom: 1px solid #eef1ee; vertical-align: top; }
+  table.facts tr:last-child th, table.facts tr:last-child td { border-bottom: 0; }
+  table.facts th { width: 38%; font-weight: 500; color: var(--muted); }
+  table.facts td { color: var(--text); font-weight: 500; }
+  .tag { display: inline-block; font-size: 12px; font-weight: 700; color: #5c4710; background: var(--notice-bg); border: 1px solid var(--notice-line); border-radius: 4px; padding: 0 7px; }
 
-  .file-meta {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    color: var(--muted);
-    font-size: 12px;
-    margin-top: 10px;
-    flex-wrap: wrap;
+  /* Sections */
+  section.sec { padding: 40px 0; }
+  section.sec + section.sec { border-top: 1px solid var(--line); }
+  section.sec.white { background: var(--paper); }
+  .sec-title { display: flex; align-items: baseline; gap: 12px; margin: 0 0 6px; }
+  .sec-title .num {
+    flex-shrink: 0; width: 30px; height: 30px; border-radius: 4px; background: var(--green); color: #fff;
+    display: grid; place-items: center; font-size: 15px; font-weight: 700; transform: translateY(4px);
   }
-  .file-meta .sep { opacity: 0.5; }
+  .sec-title h2 { margin: 0; font-size: 24px; line-height: 1.4; }
+  .sec-lead { margin: 0 0 20px 42px; color: var(--muted); font-size: 15px; max-width: 820px; }
 
-  /* Release notes */
-  .notes-wrap {
-    max-width: 640px;
-    margin: 22px auto 0;
-  }
-  .notes-wrap h2 {
-    font-size: 14px;
-    font-weight: 700;
-    margin: 0 0 8px;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-  .notes {
-    background: var(--surface-alt);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 12px 16px;
-    font-size: 13px;
-    color: #2a3a32;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    max-height: 180px;
-    overflow-y: auto;
-  }
+  /* Tiers */
+  .tiers { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .tier { background: var(--paper); border: 1px solid var(--line); border-top: 3px solid var(--green); border-radius: var(--radius); padding: 14px 16px; }
+  .tier h3 { margin: 0 0 6px; font-size: 15.5px; }
+  .tier ul { margin: 0; padding-left: 18px; font-size: 13.5px; color: var(--soft); display: grid; gap: 2px; }
+  .scope-note { margin: 12px 0 0; font-size: 13.5px; color: var(--muted); }
 
-  /* States */
-  .state {
-    text-align: center;
-    color: var(--muted);
-    padding: 24px 16px;
-    font-size: 14px;
-  }
-  .state.error {
-    color: #b91c1c;
-    background: #fef2f2;
-    border: 1px solid #fecaca;
-    border-radius: 8px;
-    padding: 14px;
-    max-width: 520px;
-    margin: 0 auto;
-  }
+  /* Modules */
+  .modules { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .mod { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; display: grid; grid-template-columns: 34px 1fr; column-gap: 12px; }
+  .mod .ic { grid-row: 1 / span 2; width: 34px; height: 34px; border-radius: 6px; background: var(--green-tint); color: var(--green); display: grid; place-items: center; }
+  .mod h3 { margin: 4px 0 4px; font-size: 15.5px; line-height: 1.4; }
+  .mod p { grid-column: 2; margin: 0; font-size: 13.5px; color: var(--soft); line-height: 1.6; }
 
-  /* Footer */
-  footer {
-    text-align: center;
-    color: var(--muted);
-    font-size: 12px;
-    padding: 22px 16px 0;
-  }
-  footer a { color: var(--green-dark); text-decoration: none; }
-  footer a:hover { text-decoration: underline; }
+  /* Feature table */
+  table.spec { width: 100%; border-collapse: collapse; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; font-size: 14px; }
+  table.spec th, table.spec td { padding: 11px 16px; border-bottom: 1px solid #eef1ee; text-align: left; vertical-align: top; }
+  table.spec tr:last-child th, table.spec tr:last-child td { border-bottom: 0; }
+  table.spec th { width: 24%; background: #f8faf8; color: var(--green); font-weight: 700; border-right: 1px solid #eef1ee; }
+  table.spec td { color: var(--soft); }
 
-  @media (max-width: 600px) {
-    .container { padding: 18px 16px 24px; }
-    .hero h1 { font-size: 24px; }
-    .hero p { font-size: 13.5px; margin-bottom: 14px; }
-    .download-card { padding: 16px; }
-    .download-card .top { flex-direction: column; gap: 6px; }
-    .companion { flex-direction: column; align-items: stretch; }
-  }
+  /* Downloads */
+  .dl-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 16px; align-items: start; }
+  .dl-card .body { padding: 16px; }
+  .dl-card .body p { margin: 0 0 12px; font-size: 14px; color: var(--soft); }
+  .dl-meta { margin: 8px 0 0; text-align: center; font-size: 12.5px; color: var(--muted); }
+  .opt { font-size: 11.5px; font-weight: 600; color: var(--muted); background: #eef1ee; border-radius: 4px; padding: 0 7px; margin-left: 4px; }
+  .sha { display: block; font-family: ui-monospace, Consolas, monospace; font-size: 10.5px; color: var(--muted); word-break: break-all; margin-top: 6px; }
+  details.notes { margin-top: 12px; border-top: 1px solid #eef1ee; padding-top: 10px; }
+  details.notes summary { cursor: pointer; font-size: 13.5px; font-weight: 600; color: var(--green); }
+  .notes-body { margin-top: 8px; background: #f8faf8; border: 1px solid var(--line); border-radius: 4px; padding: 8px 12px; font-size: 13px; max-height: 220px; overflow-y: auto; }
+  .notes-body h4 { margin: 6px 0 2px; font-size: 13px; }
+  .notes-body ul { margin: 2px 0 6px; padding-left: 18px; }
+  .notes-body p { margin: 4px 0; }
 
-  /* The Android companion app — deliberately SECONDARY to the desktop download: a quiet card
-     below it, an outline button, and "ঐচ্ছিক" up front. SOMS works fully without it. */
-  /* Same column as the desktop card above it (max-width 520px, centred). */
-  .companion-wrap { max-width: 520px; margin: 28px auto 0; text-align: left; }
-  .companion-wrap h3 {
-    font-size: 13px; font-weight: 600; color: var(--muted);
-    text-transform: none; margin: 0 0 8px; letter-spacing: 0.01em;
+  /* Steps */
+  .steps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  ol.steps { margin: 0; padding: 14px 16px; list-style: none; counter-reset: s; display: grid; gap: 9px; }
+  ol.steps li { counter-increment: s; display: flex; gap: 11px; font-size: 14px; color: var(--soft); }
+  ol.steps li::before {
+    content: counter(s, bengali); flex-shrink: 0; width: 24px; height: 24px; border-radius: 4px;
+    display: grid; place-items: center; font-size: 12.5px; font-weight: 700; background: var(--green-tint); color: var(--green); border: 1px solid #cfe3d7;
   }
-  .companion {
-    display: flex; align-items: center; gap: 16px;
-    border: 1px dashed var(--border); border-radius: 12px;
-    padding: 14px 16px; background: #fff;
+  ol.steps b { color: var(--text); }
+
+  /* FAQ */
+  .faq { display: grid; gap: 8px; max-width: 900px; }
+  .faq details { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 11px 16px; }
+  .faq summary { cursor: pointer; font-weight: 600; font-size: 15px; }
+  .faq p { margin: 8px 0 2px; font-size: 14.5px; color: var(--soft); }
+
+  footer { background: #12231a; color: #c9d3cd; font-size: 13px; padding: 22px 0; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  footer a { color: #e3ebe6; }
+
+  @media (max-width: 980px) {
+    .title-grid, .dl-grid, .steps-grid { grid-template-columns: 1fr; }
+    .tiers { grid-template-columns: 1fr 1fr; }
+    .modules { grid-template-columns: 1fr 1fr; }
   }
-  .companion .info { flex: 1; min-width: 0; }
-  .companion .name { font-weight: 600; font-size: 14.5px; margin: 0; }
-  .companion .opt {
-    display: inline-block; margin-left: 6px; padding: 1px 8px; border-radius: 999px;
-    font-size: 11px; font-weight: 600; color: var(--muted); background: #f1f5f4; vertical-align: 1px;
+  @media (max-width: 720px) {
+    .wrap { padding: 0 16px; }
+    nav.menu a:not(.dl) { display: none; }
+    .notice .wrap { align-items: flex-start; }
+    .title-block { padding: 24px 0; }
+    .title-block h1 { font-size: 26px; }
+    .tiers, .modules { grid-template-columns: 1fr; }
+    .sec-lead { margin-left: 0; }
+    section.sec { padding: 30px 0; }
+    table.spec th { width: 34%; }
+    table.spec th, table.spec td { padding: 9px 12px; }
   }
-  .companion .what { font-size: 13px; color: var(--muted); margin: 4px 0 0; line-height: 1.55; }
-  .companion .meta { font-size: 11.5px; color: var(--muted); margin: 6px 0 0; opacity: 0.85; }
-  .companion .sha { display: block; font-family: ui-monospace, Consolas, monospace; font-size: 10.5px; word-break: break-all; margin-top: 2px; }
-  .btn-outline {
-    flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-    padding: 8px 14px; border-radius: 8px; border: 1px solid var(--green);
-    color: var(--green-dark); background: #fff; font-size: 13.5px; font-weight: 600;
-    text-decoration: none; white-space: nowrap;
-  }
-  .btn-outline:hover { background: var(--green-tint); }
 </style>
 </head>
 <body>
 
-<nav class="nav">
-  <div class="nav-inner">
-    <a class="brand" href="/">
-      <span class="brand-mark">S</span>
-      <span>SOMS Desktop</span>
-    </a>
-    <a class="gh" href="https://github.com/dolil/soms-releases" target="_blank" rel="noopener">View on GitHub &rarr;</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-dl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></symbol>
+    <symbol id="i-win" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.5 10.5 4.4v7.1H3zM11.5 4.3 21 3v8.5h-9.5zM3 12.5h7.5v7.1L3 18.5zM11.5 12.5H21V21l-9.5-1.3z"/></symbol>
+    <symbol id="i-and" viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 9.48l1.84-3.18a.38.38 0 0 0-.66-.38l-1.86 3.22A11.4 11.4 0 0 0 12 8.2c-1.77 0-3.43.38-4.92.94L5.22 5.92a.38.38 0 0 0-.66.38L6.4 9.48A10.8 10.8 0 0 0 1 18h22a10.8 10.8 0 0 0-5.4-8.52zM7 15.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm10 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5z"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22 6 12 13 2 6"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M8 13h8M8 17h5"/></symbol>
+    <symbol id="i-receipt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2v20l3-2 3 2 3-2 3 2 3-2 1 .7V2l-1 .7-3-2-3 2-3-2-3 2-3-2z"/><path d="M8 8h8M8 12h8M8 16h5"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="3" y1="20" x2="21" y2="20"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></symbol>
+    <symbol id="i-map" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></symbol>
+  </defs>
+</svg>
+
+<div class="notice" role="note">
+  <div class="wrap">
+    <b>পরীক্ষামূলক সংস্করণ</b>
+    <span>সফল পরীক্ষা শেষে অনুমোদনের জন্য যথাযথ কর্তৃপক্ষের নিকট উপস্থাপন করা হবে; ব্যবহারের ঝুঁকি ব্যবহারকারীর নিজস্ব।</span>
   </div>
-</nav>
-
-<div class="container">
-  <section class="hero">
-    <span class="eyebrow">Windows Installer</span>
-    <h1>Download SOMS Desktop</h1>
-    <p>Get the latest stable build of SOMS for Windows. One click, no setup hassle.</p>
-  </section>
-
-  <div id="content">
-    <div class="state">Loading latest release&hellip;</div>
-  </div>
-
-  <!-- The Android app. Filled by loadMobile() below, independently of the desktop card: its own
-       feed, its own failure path, hidden until a first APK is published. -->
-  <div id="mobile" hidden></div>
-
-  <footer>
-    Released by <a href="https://github.com/dolil" target="_blank" rel="noopener">@dolil</a> &middot; Auto-published from CI
-  </footer>
 </div>
 
-<script>
-const REPO = "dolil/soms-releases";
+<header class="top">
+  <div class="wrap">
+    <a class="ident" href="./">
+      <span class="mark">SOMS</span>
+      <span class="ident-text"><b>স্মার্ট অফিস ম্যানেজমেন্ট সিস্টেম</b><span>Smart Office Management System</span></span>
+    </a>
+    <nav class="menu">
+      <a href="#intro">পরিচিতি</a>
+      <a href="#modules">মডিউলসমূহ</a>
+      <a href="#technical">কারিগরি বৈশিষ্ট্য</a>
+      <a href="#install">ইনস্টলেশন</a>
+      <a class="dl" href="#download">ডাউনলোড</a>
+    </nav>
+  </div>
+</header>
 
-// Where the release metadata comes from, in order of preference.
-//
-// `latest.json` is written next to this page by CI on every release
-// (.github/workflows/update-latest.yml). It is served from this origin, so it is free and
-// cannot be throttled. The GitHub API is the fallback only: anonymous callers get 60
-// requests per hour PER IP across all of api.github.com, and every request after that —
-// including this page's — is answered 403 for the rest of the hour. A whole office behind
-// one NAT address, or one developer with a script running, exhausts that quota easily, and
-// then the download page breaks for everyone sharing the address.
-const FEED = "./latest.json";
-const API = `https://api.github.com/repos/${REPO}/releases/latest`;
-const RELEASES_PAGE = `https://github.com/${REPO}/releases/latest`;
-
-const DOWNLOAD_ICON = `
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-    <polyline points="7 10 12 15 17 10"/>
-    <line x1="12" y1="15" x2="12" y2="3"/>
-  </svg>`;
-
-function escapeHtml(s) {
-  return String(s).replace(/[&<>"']/g, c => ({
-    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
-  }[c]));
-}
-function formatSize(b) {
-  if (b < 1024) return b + " B";
-  if (b < 1048576) return (b / 1024).toFixed(1) + " KB";
-  if (b < 1073741824) return (b / 1048576).toFixed(1) + " MB";
-  return (b / 1073741824).toFixed(2) + " GB";
-}
-function formatDate(iso) {
-  return new Date(iso).toLocaleDateString(undefined, {
-    year: "numeric", month: "long", day: "numeric"
-  });
-}
-
-// Only show Windows installer setup files (e.g. SOMS-Setup-1.0.0.exe)
-function pickSetupAsset(release) {
-  const assets = release.assets || [];
-  return assets.find(a => /setup.*\.exe$/i.test(a.name))
-      || assets.find(a => /\.exe$/i.test(a.name))
-      || null;
-}
-
-function renderLatest(release) {
-  const setup = pickSetupAsset(release);
-  const version = release.tag_name || release.name;
-  const notes = (release.body || "").trim();
-
-  const downloadHtml = setup
-    ? `
-      <a class="btn-download" href="${escapeHtml(setup.browser_download_url)}">
-        ${DOWNLOAD_ICON}
-        Download for Windows
-      </a>
-      <div class="file-meta">
-        <span>${escapeHtml(setup.name)}</span>
-        <span class="sep">&bull;</span>
-        <span>${formatSize(setup.size)}</span>
-      </div>`
-    : `<div class="state">No Windows installer in this release.</div>`;
-
-  return `
-    <div class="download-card">
-      <div class="top">
-        <div class="version-block">
-          <p class="version">${escapeHtml(release.name || version)}</p>
-          <p class="date">Released ${formatDate(release.published_at)}</p>
-        </div>
-        <span class="platform-pill">Windows &middot; .exe</span>
+<!-- Title block -->
+<div class="title-block">
+  <div class="wrap title-grid">
+    <div>
+      <p class="kicker">ডেস্কটপ সফটওয়্যার &middot; Windows</p>
+      <h1>স্মার্ট অফিস ম্যানেজমেন্ট সিস্টেম (SOMS)</h1>
+      <p class="en">Smart Office Management System</p>
+      <p class="desc">বহুস্তরভিত্তিক অফিসের পত্র যোগাযোগ, নথি, দৈনিক রেজিস্টার, প্রতিবেদন ও মাসিক বিবরণী ব্যবস্থাপনার সমন্বিত ডেস্কটপ সফটওয়্যার — কাগজের রেজিস্টার, হাতে যোগ করা বিবরণী ও বিচ্ছিন্ন স্প্রেডশিটের পরিবর্তে একটি ডিজিটাল ব্যবস্থা।</p>
+      <div class="actions">
+        <a class="btn" data-dl="desktop" href="https://github.com/dolil/soms-releases/releases/latest"><svg width="17" height="17"><use href="#i-win"/></svg>ডেস্কটপ সফটওয়্যার ডাউনলোড</a>
+        <a class="btn secondary" href="#download"><svg width="17" height="17"><use href="#i-and"/></svg>সহায়ক মোবাইল অ্যাপ</a>
       </div>
-      ${downloadHtml}
     </div>
-    ${notes ? `
-      <div class="notes-wrap">
-        <h2>What&rsquo;s new</h2>
-        <div class="notes">${escapeHtml(notes)}</div>
-      </div>` : ""}
-  `;
-}
 
-// Last resort: no version, no file size, but still a working download. The
-// /releases/latest URL is plain GitHub web — it needs no API call and no quota.
-function renderFallback() {
-  return `
-    <div class="download-card">
-      <div class="top">
-        <div class="version-block">
-          <p class="version">Latest release</p>
-          <p class="date">Version details are unavailable right now</p>
-        </div>
-        <span class="platform-pill">Windows &middot; .exe</span>
+    <div class="panel">
+      <div class="panel-head"><svg width="16" height="16"><use href="#i-list"/></svg>সংস্করণ তথ্য</div>
+      <table class="facts">
+        <tr><th>সর্বশেষ সংস্করণ</th><td data-ver="desktop">—</td></tr>
+        <tr><th>প্রকাশের তারিখ</th><td data-date="desktop">—</td></tr>
+        <tr><th>ইনস্টলার ফাইল</th><td data-file="desktop">SOMS-Setup.exe</td></tr>
+        <tr><th>ফাইলের আকার</th><td data-size="desktop">—</td></tr>
+        <tr><th>প্ল্যাটফর্ম</th><td>Windows ১০ / ১১ (৬৪-বিট)</td></tr>
+        <tr><th>অবস্থা</th><td><span class="tag">পরীক্ষামূলক সংস্করণ</span></td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 1. Introduction -->
+<section class="sec" id="intro">
+  <div class="wrap">
+    <div class="sec-title"><span class="num">১</span><h2>পরিচিতি ও অফিস স্তর</h2></div>
+    <p class="sec-lead">সফটওয়্যারটি চার স্তরের অফিস কাঠামোর জন্য প্রস্তুত। প্রতিটি অফিস নিজের এবং অধীনস্থ অফিসসমূহের তথ্য দেখতে পায়; প্রতিটি স্তরের জন্য পৃথক ড্যাশবোর্ড রয়েছে।</p>
+    <div class="tiers">
+      <div class="tier">
+        <h3>প্রধান কার্যালয়</h3>
+        <ul>
+          <li>পত্রের টেমপ্লেট, বিষয় কোড ও লেটারহেড লোগো নির্ধারণ</li>
+          <li>সমন্বিত মাসিক বিবরণী</li>
+          <li>সকল অফিসের তালিকা</li>
+        </ul>
       </div>
-      <a class="btn-download" href="${RELEASES_PAGE}">
-        ${DOWNLOAD_ICON}
-        Download for Windows
-      </a>
-      <div class="file-meta"><span>Opens the release page on GitHub</span></div>
-    </div>`;
-}
-
-async function fetchLatest() {
-  try {
-    // Cache-busted so a fresh release shows up without waiting out the CDN's TTL.
-    const res = await fetch(`${FEED}?t=${Date.now()}`, { cache: "no-store" });
-    if (res.ok) {
-      const data = await res.json();
-      if (data && Array.isArray(data.assets)) return data;
-    }
-  } catch (err) {
-    console.warn("Static release feed unavailable, falling back to the API:", err);
-  }
-
-  const res = await fetch(API, { headers: { Accept: "application/vnd.github+json" } });
-  if (res.status === 404) return null;
-  if (!res.ok) throw new Error(`GitHub API returned ${res.status}`);
-  return res.json();
-}
-
-async function load() {
-  const content = document.getElementById("content");
-  try {
-    const latest = await fetchLatest();
-    content.innerHTML = latest
-      ? renderLatest(latest)
-      : `<div class="state">No releases published yet. Check back soon.</div>`;
-  } catch (err) {
-    // The visitor came here to download something; give them the link rather than an
-    // HTTP status code they can do nothing with.
-    console.warn("Could not load release metadata:", err);
-    content.innerHTML = renderFallback();
-  }
-}
-
-load();
-
-// ── SOMS Android app ──────────────────────────────────────────────────────────────────────────
-// Published to a SEPARATE repo, dolil/soms-mobile-releases, so a phone build can never be taken
-// for a desktop update by electron-updater (which reads this repo's latest release). Its
-// release-mobile workflow writes latest.json there; raw.githubusercontent.com serves it with open
-// CORS and no API quota. Nothing above depends on this: a missing or broken feed only leaves the
-// Android card hidden.
-const MOBILE_FEED = "https://raw.githubusercontent.com/dolil/soms-mobile-releases/main/latest.json";
-
-// A companion, not a second product: SOMS runs entirely on the desktop. The card says what the app
-// is FOR (sending a signed paper — the monthly return's স্বাক্ষরিত কপি — from a phone) and that it is
-// optional, so nobody installs it thinking the system needs it.
-function renderMobile(m) {
-  const apk = m.apk || {};
-  return `
-    <div class="companion-wrap">
-      <h3>সহায়ক মোবাইল অ্যাপ</h3>
-      <div class="companion">
-        <div class="info">
-          <p class="name">SOMS মোবাইল অ্যাপ <span class="opt">ঐচ্ছিক</span></p>
-          <p class="what">
-            মাসিক প্রতিবেদনের স্বাক্ষরিত কপির মতো কাগজপত্র ফোনে স্ক্যান করে বা পিডিএফ হিসেবে ডেস্কটপে পাঠানোর জন্য।
-            SOMS ব্যবহারে এটি আবশ্যক নয় — ডেস্কটপ থেকেই পিডিএফ সংযুক্ত করা যায়।
-          </p>
-          <p class="meta">
-            Android ${escapeHtml(m.min_android || "7.0")}+ &middot; সংস্করণ ${escapeHtml(m.version || "")}
-            &middot; ${apk.size ? formatSize(apk.size) : ""}
-            &middot; প্রথমবার ইনস্টলে “অজানা উৎস” এর অনুমতি দিতে হবে
-            ${apk.sha256 ? `<span class="sha">SHA-256: ${escapeHtml(apk.sha256)}</span>` : ""}
-          </p>
-        </div>
-        <a class="btn-outline" href="${escapeHtml(apk.url)}">${DOWNLOAD_ICON} Android APK</a>
+      <div class="tier">
+        <h3>বিভাগীয় অফিস</h3>
+        <ul>
+          <li>পত্র আদান-প্রদান</li>
+          <li>অধীনস্থ অফিসের তালিকা</li>
+          <li>প্রতিবেদন</li>
+        </ul>
       </div>
-    </div>`;
-}
+      <div class="tier">
+        <h3>জেলা অফিস</h3>
+        <ul>
+          <li>অধীনস্থ অফিসের মাসিক বিবরণী গ্রহণ</li>
+          <li>সমন্বিত মাসিক বিবরণী প্রস্তুত</li>
+          <li>পত্র, নথি ও প্রতিবেদন</li>
+        </ul>
+      </div>
+      <div class="tier">
+        <h3>উপজেলা পর্যায়ের অফিস</h3>
+        <ul>
+          <li>দলিল দাখিল গ্রহণ ও চালান এন্ট্রি</li>
+          <li>তল্লাশ ও নকলের আবেদন</li>
+          <li>দৈনিক রেজিস্টার ও প্রতিবেদন</li>
+        </ul>
+      </div>
+    </div>
+    <p class="scope-note">ব্যবহারকারীর ভূমিকা তিন ধরনের — অফিস সহকারী, কর্মকর্তা ও অফিস অ্যাডমিন; প্রত্যেকের অনুমতি ভূমিকা অনুযায়ী নির্ধারিত।</p>
+  </div>
+</section>
 
-async function loadMobile() {
-  const box = document.getElementById("mobile");
-  try {
-    const res = await fetch(`${MOBILE_FEED}?t=${Date.now()}`, { cache: "no-store" });
-    if (!res.ok) return; // no Android release yet — the card stays hidden
-    const m = await res.json();
-    // Only ever link to an APK published in the SOMS mobile releases repo.
-    if (!m || !m.apk || !/^https:\/\/github\.com\/dolil\/soms-mobile-releases\//.test(m.apk.url || "")) return;
-    box.innerHTML = renderMobile(m);
-    box.hidden = false;
-  } catch (err) {
-    console.warn("Android release feed unavailable:", err);
+<!-- 2. Modules -->
+<section class="sec white" id="modules">
+  <div class="wrap">
+    <div class="sec-title"><span class="num">২</span><h2>প্রধান মডিউলসমূহ</h2></div>
+    <p class="sec-lead">অফিসের দৈনন্দিন কাজের প্রধান শাখাসমূহ সফটওয়্যারে অন্তর্ভুক্ত।</p>
+    <div class="modules">
+      <div class="mod">
+        <span class="ic"><svg width="18" height="18"><use href="#i-mail"/></svg></span>
+        <h3>পত্রাবলী</h3>
+        <p>অফিস স্মারক, অফিস আদেশ, পরিপত্র, প্রজ্ঞাপন ও বিজ্ঞপ্তি প্রস্তুত ও প্রেরণ; প্রাপ্ত ও প্রেরিত রেজিস্টার, খসড়া এবং অনুলিপি প্রেরণ।</p>
+      </div>
+      <div class="mod">
+        <span class="ic"><svg width="18" height="18"><use href="#i-folder"/></svg></span>
+        <h3>নথিসমূহ</h3>
+        <p>নম্বরযুক্ত নথি খোলা ও ব্যবস্থাপনা; প্রাপ্ত পত্র নথিতে লিপিবদ্ধকরণ; নথির শ্রেণিবিন্যাস ও বিনষ্টকরণ।</p>
+      </div>
+      <div class="mod">
+        <span class="ic"><svg width="18" height="18"><use href="#i-doc"/></svg></span>
+        <h3>দলিল শাখা</h3>
+        <p>দলিল দাখিল গ্রহণ ও ফি হিসাব; দলিলের QR স্ক্যানের মাধ্যমে তথ্য গ্রহণ।</p>
+      </div>
+      <div class="mod">
+        <span class="ic"><svg width="18" height="18"><use href="#i-receipt"/></svg></span>
+        <h3>চালান এন্ট্রি</h3>
+        <p>ই-চালান রেজিস্টার, স্ক্যানের মাধ্যমে এন্ট্রি এবং চালানের সত্যতা যাচাই।</p>
+      </div>
+      <div class="mod">
+        <span class="ic"><svg width="18" height="18"><use href="#i-search"/></svg></span>
+        <h3>তল্লাশ ও নকল</h3>
+        <p>তল্লাশ, পরিদর্শন ও নকলের আবেদন গ্রহণ এবং তল্লাশ ও নকল রেজিস্টার।</p>
+      </div>
+      <div class="mod">
+        <span class="ic"><svg width="18" height="18"><use href="#i-book"/></svg></span>
+        <h3>দৈনিক রেজিস্টার</h3>
+        <p>অফিসের দৈনিক রেজিস্টার ডিজিটালভাবে সংরক্ষণ; রেজিস্টারের ফাঁকা ফরম্যাট প্রিন্ট।</p>
+      </div>
+      <div class="mod">
+        <span class="ic"><svg width="18" height="18"><use href="#i-chart"/></svg></span>
+        <h3>প্রতিবেদন ও মাসিক বিবরণী</h3>
+        <p>দৈনিক ও মাসিক প্রতিবেদন, ই-চালান রিপোর্ট; অধীনস্থ অফিসের মাসিক বিবরণী গ্রহণ ও সমন্বয়।</p>
+      </div>
+      <div class="mod">
+        <span class="ic"><svg width="18" height="18"><use href="#i-check"/></svg></span>
+        <h3>ডকুমেন্ট যাচাই</h3>
+        <p>বিভিন্ন ডকুমেন্টের অনলাইন যাচাইয়ের সুবিধা এক জায়গায়।</p>
+      </div>
+      <div class="mod">
+        <span class="ic"><svg width="18" height="18"><use href="#i-book"/></svg></span>
+        <h3>সংরক্ষিত জমি</h3>
+        <p>সংরক্ষিত জমির রেজিস্টার প্রস্তুত ও আপডেট রাখা।</p>
+      </div>
+      <div class="mod">
+        <span class="ic"><svg width="18" height="18"><use href="#i-map"/></svg></span>
+        <h3>ভূমি তথ্য ও ফি</h3>
+        <p>জমির শ্রেণী, মৌজা ও বাজার মূল্যের তথ্য; ফি ও করের তালিকা এবং অফিসভিত্তিক ফি সেটিংস।</p>
+      </div>
+      <div class="mod">
+        <span class="ic"><svg width="18" height="18"><use href="#i-gear"/></svg></span>
+        <h3>প্রশাসন ও অফিস সেটিংস</h3>
+        <p>নিজ অফিসের ব্যবহারকারী ব্যবস্থাপনা, অফিসের তথ্য এবং প্রয়োজনীয় সেটিংস।</p>
+      </div>
+      <div class="mod">
+        <span class="ic"><svg width="18" height="18"><use href="#i-list"/></svg></span>
+        <h3>অফিস তালিকা</h3>
+        <p>প্রধান কার্যালয়, বিভাগীয় ও জেলা অফিস থেকে অধীনস্থ সকল অফিসের তালিকা ও তথ্য দেখা।</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. Technical -->
+<section class="sec" id="technical">
+  <div class="wrap">
+    <div class="sec-title"><span class="num">৩</span><h2>কারিগরি বৈশিষ্ট্য</h2></div>
+    <p class="sec-lead">সংযোগ বিচ্ছিন্ন অবস্থাতেও দৈনন্দিন কাজ চালু রাখা এবং তথ্যের নিরাপত্তা নিশ্চিত করার জন্য প্রস্তুত।</p>
+    <table class="spec">
+      <tr><th>অফলাইন কার্যক্রম</th><td>ইন্টারনেট ছাড়াই পত্র, নথি সম্পাদনা, দলিল ও অন্যান্য এন্ট্রি করা যায়; সংযোগ পেলে স্বয়ংক্রিয়ভাবে সার্ভারে সিঙ্ক হয়। দাপ্তরিক নম্বর প্রদান ও চালান এন্ট্রির মতো কাজে সংযোগ প্রয়োজন।</td></tr>
+      <tr><th>সিঙ্ক</th><td>চালু থাকা অবস্থায় নিয়মিত বিরতিতে এবং অফলাইনে করা পরিবর্তনের পরপর স্বয়ংক্রিয় সিঙ্ক। সার্ভার যে পরিবর্তন গ্রহণ করে না তা “ক্লাউড সিঙ্ক” পাতায় পর্যালোচনার জন্য তালিকাভুক্ত থাকে।</td></tr>
+      <tr><th>লগইন ও নিরাপত্তা</th><td>ব্যবহারকারীর নাম ও পাসওয়ার্ড দিয়ে লগইন; লগইন টোকেন Windows Credential Manager-এ সুরক্ষিত থাকে। একবার অনলাইনে লগইন করার পর ওই কম্পিউটারে অফলাইনেও লগইন করা যায়।</td></tr>
+      <tr><th>ভূমিকাভিত্তিক অনুমতি</th><td>অফিস সহকারী, কর্মকর্তা ও অফিস অ্যাডমিন — প্রতিটি ভূমিকার জন্য নির্ধারিত অনুমতি; প্রত্যেক ব্যবহারকারী শুধু নিজ ও অধীনস্থ অফিসের তথ্য দেখতে পান।</td></tr>
+      <tr><th>অডিট লগ</th><td>পত্র, চালান, দলিল, আবেদন, নথি ও ব্যবহারকারীসহ গুরুত্বপূর্ণ তথ্যের প্রতিটি পরিবর্তনের রেকর্ড সংরক্ষিত থাকে।</td></tr>
+      <tr><th>পত্র প্রস্তুত</th><td>টেবিল, অ্যালাইনমেন্ট ও ফন্টের আকারসহ পূর্ণাঙ্গ লেখার সম্পাদক; বিজয় ফরম্যাটের লেখা পেস্ট করলে স্বয়ংক্রিয়ভাবে ইউনিকোডে রূপান্তর; সাধারণ, জরুরি ও গোপনীয় অগ্রাধিকার; প্রাপ্তি ও জবাবের অবস্থা অনুসরণ।</td></tr>
+      <tr><th>PDF ও প্রিন্ট</th><td>সকল পত্র ও প্রতিবেদন PDF আকারে প্রিন্ট; পত্রে লেটারহেড লোগো এবং স্মারক নম্বর ও তারিখসহ QR কোড। ব্যবহৃত বাঁধাই রেজিস্টারের পাতায় আংশিক প্রিন্টের সুবিধা।</td></tr>
+      <tr><th>স্ক্যানার সহায়তা</th><td>বারকোড/QR স্ক্যানারের মাধ্যমে ই-চালান, দলিল ও আবেদনের QR, দাখিলা, জাতীয় পরিচয়পত্রের বারকোড এবং পাসপোর্টের MRZ থেকে তথ্য গ্রহণ।</td></tr>
+      <tr><th>আপডেট</th><td>সফটওয়্যার চালুর সময় নতুন সংস্করণ খোঁজে ও ব্যাকগ্রাউন্ডে ডাউনলোড করে; পুনরায় চালু করলে আপডেট প্রয়োগ হয়। “অ্যাপ আপডেট” পাতা থেকেও আপডেট চেক করা যায়।</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- 4. Download -->
+<section class="sec white" id="download">
+  <div class="wrap">
+    <div class="sec-title"><span class="num">৪</span><h2>ডাউনলোড</h2></div>
+    <p class="sec-lead">ডেস্কটপ সফটওয়্যারটি মূল ব্যবস্থা। মোবাইল অ্যাপ ঐচ্ছিক — শুধু স্বাক্ষরিত কপি স্ক্যান করে পাঠানোর সুবিধার জন্য।</p>
+    <div class="dl-grid">
+      <div class="panel dl-card">
+        <div class="panel-head"><svg width="16" height="16"><use href="#i-win"/></svg>ডেস্কটপ সফটওয়্যার (Windows)</div>
+        <table class="facts">
+          <tr><th>সংস্করণ</th><td><span data-ver="desktop">—</span> <span class="tag">পরীক্ষামূলক</span></td></tr>
+          <tr><th>প্রকাশের তারিখ</th><td data-date="desktop">—</td></tr>
+          <tr><th>অপারেটিং সিস্টেম</th><td>Windows ১০ / ১১ (৬৪-বিট)</td></tr>
+          <tr><th>ইন্টারনেট</th><td>প্রথম লগইন, সিঙ্ক ও আপডেটের জন্য</td></tr>
+        </table>
+        <div class="body">
+          <a class="btn block" data-dl="desktop" href="https://github.com/dolil/soms-releases/releases/latest"><svg width="17" height="17"><use href="#i-dl"/></svg>ডেস্কটপ সফটওয়্যার ডাউনলোড</a>
+          <p class="dl-meta"><span data-file="desktop">SOMS-Setup.exe</span> &middot; <span data-size="desktop"></span></p>
+          <details class="notes" data-notes="desktop" hidden><summary>এই সংস্করণে যা নতুন</summary><div class="notes-body"></div></details>
+        </div>
+      </div>
+
+      <div class="panel dl-card" id="mobile">
+        <div class="panel-head"><svg width="16" height="16"><use href="#i-and"/></svg>সহায়ক মোবাইল অ্যাপ (Android) <span class="opt">ঐচ্ছিক</span></div>
+        <div class="body">
+          <p>মাসিক বিবরণীর স্বাক্ষরিত কপির মতো কাগজপত্র ফোনে স্ক্যান করে PDF হিসেবে ডেস্কটপে পাঠানোর জন্য। ডেস্কটপের “মোবাইল থেকে আপলোড করুন” অংশে দেখানো QR কোড স্ক্যান করে সংযোগ করা হয়; এর জন্য আলাদা লগইন লাগে না। সফটওয়্যার ব্যবহারে অ্যাপটি আবশ্যক নয় — ডেস্কটপ থেকেই PDF সংযুক্ত করা যায়।</p>
+        </div>
+        <table class="facts">
+          <tr><th>সংস্করণ</th><td data-ver="mobile">—</td></tr>
+          <tr><th>অপারেটিং সিস্টেম</th><td>Android ৭.০ বা নতুন</td></tr>
+          <tr><th>অনুমতি</th><td>ক্যামেরা ও ইন্টারনেট</td></tr>
+        </table>
+        <div class="body">
+          <a class="btn secondary block" data-dl="mobile" href="https://github.com/dolil/soms-mobile-releases/releases/latest"><svg width="17" height="17"><use href="#i-dl"/></svg>Android অ্যাপ ডাউনলোড</a>
+          <p class="dl-meta">APK &middot; <span data-size="mobile"></span><span class="sha" data-sha="mobile"></span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. Installation -->
+<section class="sec" id="install">
+  <div class="wrap">
+    <div class="sec-title"><span class="num">৫</span><h2>ইনস্টলেশন নির্দেশিকা</h2></div>
+    <p class="sec-lead">ইনস্টলের জন্য কম্পিউটারের Administrator অনুমতি প্রয়োজন।</p>
+    <div class="steps-grid">
+      <div class="panel">
+        <div class="panel-head"><svg width="16" height="16"><use href="#i-win"/></svg>ডেস্কটপ সফটওয়্যার</div>
+        <ol class="steps">
+          <li><span><b>ডেস্কটপ সফটওয়্যার ডাউনলোড</b> বাটনে ক্লিক করে ইনস্টলার নামান।</span></li>
+          <li><span>ফাইলটি চালু করুন। “Windows protected your PC” বার্তা দেখালে <b>More info → Run anyway</b> ক্লিক করুন।</span></li>
+          <li><span>লাইসেন্সের শর্ত পড়ে সম্মতি দিন, প্রয়োজনে ইনস্টলের ফোল্ডার পরিবর্তন করুন এবং Administrator অনুমতি চাইলে <b>Yes</b> ক্লিক করুন।</span></li>
+          <li><span>সফটওয়্যারটি চালু করে অফিস থেকে প্রদত্ত <b>ব্যবহারকারীর নাম ও পাসওয়ার্ড</b> দিয়ে লগইন করুন। প্রথম লগইনের সময় ইন্টারনেট সংযোগ প্রয়োজন।</span></li>
+        </ol>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><svg width="16" height="16"><use href="#i-and"/></svg>মোবাইল অ্যাপ (ঐচ্ছিক)</div>
+        <ol class="steps">
+          <li><span>ফোন থেকে <b>Android অ্যাপ ডাউনলোড</b> বাটনে চাপুন এবং APK ফাইলটি খুলুন।</span></li>
+          <li><span>প্রথমবার <b>“অজানা উৎস থেকে ইনস্টল”</b>-এর অনুমতি চাইলে তা দিন এবং <b>Install</b> চাপুন।</span></li>
+          <li><span>ডেস্কটপে <b>“মোবাইল থেকে আপলোড করুন”</b> নির্বাচন করলে একটি QR কোড দেখাবে; অ্যাপে <b>“QR স্ক্যান করুন”</b> চেপে কোডটি স্ক্যান করুন।</span></li>
+          <li><span>স্বাক্ষরিত কপি স্ক্যান করে বা বিদ্যমান PDF নির্বাচন করে পাঠান। অ্যাপের নতুন সংস্করণ এই পাতা থেকে ডাউনলোড করে ইনস্টল করুন।</span></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. FAQ -->
+<section class="sec white" id="faq">
+  <div class="wrap">
+    <div class="sec-title"><span class="num">৬</span><h2>সাধারণ প্রশ্ন ও উত্তর</h2></div>
+    <div class="faq" style="margin-top:16px">
+      <details>
+        <summary>“পরীক্ষামূলক সংস্করণ” বলতে কী বোঝানো হয়েছে?</summary>
+        <p>সফটওয়্যারটি বর্তমানে পরীক্ষামূলকভাবে ব্যবহৃত হচ্ছে। সফল পরীক্ষা শেষে অনুমোদনের জন্য যথাযথ কর্তৃপক্ষের নিকট উপস্থাপন করা হবে। এই পর্যায়ে ব্যবহারের ঝুঁকি ব্যবহারকারীর নিজস্ব।</p>
+      </details>
+      <details>
+        <summary>ইন্টারনেট সংযোগ না থাকলে কাজ করা যাবে কি?</summary>
+        <p>হ্যাঁ। একবার অনলাইনে লগইন করার পর ইন্টারনেট ছাড়াও লগইন করে পত্র, নথি ও অধিকাংশ এন্ট্রির কাজ করা যায়। সংযোগ ফিরে এলে পরিবর্তনগুলো স্বয়ংক্রিয়ভাবে সিঙ্ক হয়। দাপ্তরিক নম্বর প্রদান ও চালান এন্ট্রির মতো কিছু কাজের জন্য সংযোগ প্রয়োজন।</p>
+      </details>
+      <details>
+        <summary>লগইনের তথ্য কোথা থেকে পাওয়া যাবে?</summary>
+        <p>প্রতিটি অফিসের ব্যবহারকারী অ্যাকাউন্ট অফিস অ্যাডমিন তৈরি ও ব্যবস্থাপনা করেন। ব্যবহারকারীর নাম ও পাসওয়ার্ডের জন্য নিজ অফিসের অ্যাডমিনের সাথে যোগাযোগ করুন।</p>
+      </details>
+      <details>
+        <summary>ইনস্টলের সময় Windows সতর্কবার্তা দেখাচ্ছে কেন?</summary>
+        <p>ইনস্টলারটি এখনো কোড-সাইন করা হয়নি, তাই Windows SmartScreen প্রথমবার সতর্কবার্তা দেখায়। শুধু এই পাতা থেকে ডাউনলোড করা ইনস্টলারের ক্ষেত্রে <b>More info → Run anyway</b> ক্লিক করে ইনস্টল সম্পন্ন করুন।</p>
+      </details>
+      <details>
+        <summary>সফটওয়্যার কীভাবে আপডেট হয়?</summary>
+        <p>সফটওয়্যার চালুর সময় নতুন সংস্করণ খোঁজে ও ব্যাকগ্রাউন্ডে ডাউনলোড করে; ডাউনলোড শেষে “আপডেট প্রস্তুত” বার্তা দেখায় এবং পুনরায় চালু করলে আপডেট প্রয়োগ হয়। “অ্যাপ আপডেট” পাতা থেকেও আপডেট চেক করা যায়।</p>
+      </details>
+      <details>
+        <summary>সফটওয়্যার আনইনস্টল করলে তথ্য মুছে যাবে কি?</summary>
+        <p>না। সিঙ্ক হওয়া সকল তথ্য সার্ভারে সংরক্ষিত থাকে, এবং কম্পিউটারের স্থানীয় তথ্যও আনইনস্টলের পর মুছে যায় না। আনইনস্টলের আগে সকল পরিবর্তন সিঙ্ক হয়েছে কি না “ক্লাউড সিঙ্ক” পাতায় দেখে নিন।</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>স্মার্ট অফিস ম্যানেজমেন্ট সিস্টেম (SOMS) &middot; পরীক্ষামূলক সংস্করণ</span>
+    <span><a href="https://github.com/dolil/soms-releases/releases" target="_blank" rel="noopener">সংস্করণের ইতিহাস</a></span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+  // Release details come from latest.json next to this page (regenerated by
+  // .github/workflows/update-latest.yml on every release), so visitors never spend the
+  // anonymous GitHub API quota (60 requests/hour per IP). The API is a fallback only.
+  // Every link already works without this script; it only fills in exact files and details.
+  var REPO = "dolil/soms-releases";
+  var API = "https://api.github.com/repos/" + REPO + "/releases/latest";
+  // The Android app lives in a separate repo so electron-updater can never mistake it for a
+  // desktop update. Its workflow writes latest.json on main; raw.githubusercontent serves it
+  // with open CORS.
+  var MOBILE_FEED = "https://raw.githubusercontent.com/dolil/soms-mobile-releases/main/latest.json";
+  var MOBILE_REPO_URL = "https://github.com/dolil/soms-mobile-releases/";
+
+  function each(sel, fn) { Array.prototype.forEach.call(document.querySelectorAll(sel), fn); }
+  function setText(attr, kind, text) { if (text) each("[" + attr + '="' + kind + '"]', function (el) { el.textContent = text; }); }
+  var BN = "০১২৩৪৫৬৭৮৯";
+  function bn(s) { return String(s).replace(/\d/g, function (d) { return BN[d]; }); }
+  function size(b) {
+    if (!b) return "";
+    if (b < 1048576) return bn((b / 1024).toFixed(1)) + " KB";
+    if (b < 1073741824) return bn((b / 1048576).toFixed(1)) + " MB";
+    return bn((b / 1073741824).toFixed(2)) + " GB";
   }
-}
+  function date(iso) {
+    if (!iso) return "";
+    try { return new Date(iso).toLocaleDateString("bn-BD", { year: "numeric", month: "long", day: "numeric" }); } catch (e) { return ""; }
+  }
+  function ver(v) { v = String(v || "").replace(/^v/i, ""); return v ? bn(v) : ""; }
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  // Notes are Markdown; escape first, then add back only a few tags.
+  function notes(src) {
+    var out = [], inList = false;
+    function inline(s) { return s.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>"); }
+    esc(src).split(/\r?\n/).forEach(function (raw) {
+      var line = raw.trim(), li = line.match(/^[-*]\s+(.*)$/);
+      if (li) { if (!inList) { out.push("<ul>"); inList = true; } out.push("<li>" + inline(li[1]) + "</li>"); return; }
+      if (inList) { out.push("</ul>"); inList = false; }
+      if (!line || /^-{3,}$/.test(line)) return;
+      var h = line.match(/^#{1,6}\s+(.*)$/);
+      out.push(h ? "<h4>" + inline(h[1]) + "</h4>" : "<p>" + inline(line) + "</p>");
+    });
+    if (inList) out.push("</ul>");
+    return out.join("");
+  }
+  function getJSON(url) {
+    return fetch(url + "?t=" + Date.now(), { cache: "no-store" }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); });
+  }
 
-loadMobile();
+  // Desktop
+  getJSON("./latest.json")
+    .then(function (d) { if (!d || !Array.isArray(d.assets)) throw new Error("bad feed"); return d; })
+    .catch(function () { return fetch(API, { headers: { Accept: "application/vnd.github+json" } }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }); })
+    .then(function (r) {
+      var a = r.assets || [];
+      var setup = a.filter(function (x) { return /setup.*\.exe$/i.test(x.name); })[0] || a.filter(function (x) { return /\.exe$/i.test(x.name); })[0];
+      setText("data-ver", "desktop", ver(r.name || r.tag_name));
+      setText("data-date", "desktop", date(r.published_at));
+      if (setup) {
+        each('[data-dl="desktop"]', function (el) { el.href = setup.browser_download_url; });
+        setText("data-size", "desktop", size(setup.size));
+        setText("data-file", "desktop", setup.name);
+      }
+      var body = (r.body || "").trim();
+      if (body) each('[data-notes="desktop"]', function (box) { box.querySelector(".notes-body").innerHTML = notes(body); box.hidden = false; });
+    })
+    .catch(function (e) { console.warn("Desktop release details unavailable:", e); });
+
+  // Android (optional companion)
+  getJSON(MOBILE_FEED)
+    .then(function (m) {
+      var apk = (m && m.apk) || {};
+      if (String(apk.url || "").indexOf(MOBILE_REPO_URL) !== 0) throw new Error("unexpected APK url");
+      each('[data-dl="mobile"]', function (el) { el.href = apk.url; });
+      setText("data-ver", "mobile", ver(m.version));
+      setText("data-size", "mobile", size(apk.size));
+      if (apk.sha256) setText("data-sha", "mobile", "SHA-256: " + apk.sha256);
+    })
+    .catch(function (e) { console.warn("Android release details unavailable:", e); });
+})();
 </script>
-
 </body>
 </html>
